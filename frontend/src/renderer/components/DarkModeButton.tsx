@@ -1,16 +1,27 @@
-import React from 'react';
-import { Button } from '@mantine/core';
+import { ActionIcon, Switch, Group, useMantineTheme } from '@mantine/core';
+import { IconSun, IconMoonStars } from '@tabler/icons-react';
 
-function ThemeToggleButton({ toggleTheme, colorScheme }) {
+type DarkModeButtonProps = {
+  toggleTheme: () => void;
+  colorScheme: string;
+};
+
+function DarkModeButton({ toggleTheme, colorScheme }: DarkModeButtonProps) {
   const handleClick = () => {
     toggleTheme();
   };
 
+  const theme = useMantineTheme();
+
   return (
-    <Button onClick={handleClick}>
-      Toggle {colorScheme === 'dark' ? 'Light' : 'Dark'} Mode
-    </Button>
+    <Switch
+      size="md"
+      color={theme.colorScheme === 'dark' ? 'gray' : 'dark'}
+      onLabel={<IconSun size="1rem" stroke={2.5} color={theme.colors.yellow[4]} />}
+      offLabel={<IconMoonStars size="1rem" stroke={2.5} color={theme.colors.blue[6]} />}
+      onChange={handleClick}
+    />
   );
 }
 
-export default ThemeToggleButton;
+export default DarkModeButton;
