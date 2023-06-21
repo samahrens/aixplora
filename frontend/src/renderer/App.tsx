@@ -11,6 +11,7 @@ import Chat from './pages/Chat/Chat';
 import config from './config.js';
 import { useState, useEffect } from "react";
 import Graph from './pages/graph/Graph';
+import ThemeToggleButton from './components/DarkModeButton';
 
 const randomLinks = [
   { link: '/', label: 'Home' },
@@ -47,6 +48,7 @@ function checkConfig() {
 
 export default function Hello() {
   const [isConfigValid, setConfigValid] = useState(null);
+  const [colorScheme, setColorScheme] = useState<any>('light');
 
   useEffect(() => {
     checkConfig().then((isValid) => {
@@ -58,10 +60,21 @@ export default function Hello() {
     return <div>Loading...</div>;
   }
 
+
+  const toggleTheme = () => {
+    setColorScheme(colorScheme === 'dark' ? 'light' : 'dark');
+  };
+
+  // const theme = {
+  //   ...DEFAULT_THEME,
+  //   colorScheme: colorScheme,
+  // };
+
   return (
     <div>
-      <MantineProvider>
+      <MantineProvider theme={{colorScheme}} withGlobalStyles withNormalizeCSS>
         <Router>
+        <ThemeToggleButton toggleTheme={toggleTheme} colorScheme={colorScheme} />
           <HeaderResponsive links={randomLinks} />
           <Routes>
             <Route path="/" element={isConfigValid ? <GettingStarted /> : <Config />} />
