@@ -3,6 +3,7 @@ import { DropzoneButton } from "./components/Dropzone";
 import UploadedTable from "./components/Uploaded";
 import axios from "axios";
 import config from "../../config";
+import { ErrorNotification } from '../../components/ErrorNotification'
 
 type FileData = {
   name: string;
@@ -24,6 +25,7 @@ export function Upload() {
       })
       .catch((error) => {
         console.log('Error fetching config:', error);
+        ErrorNotification('Error fetching config:', error);
       });
   }, []); // The empty array makes this run on mount only
 

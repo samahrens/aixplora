@@ -11,6 +11,8 @@ import Chat from './pages/Chat/Chat';
 import config from './config.js';
 import { useState, useEffect } from "react";
 import { Summary } from './pages/summary/Summary';
+import { Notifications } from '@mantine/notifications';
+import { ErrorNotification } from './components/ErrorNotification'
 
 const randomLinks = [
   { link: '/', label: 'Home' },
@@ -39,6 +41,7 @@ function checkConfig() {
     })
     .catch((error) => {
       console.log('Error fetching config:', error);
+      ErrorNotification('Error fetching config:', error);
       // Return false if there's an error
       return false;
     });
@@ -66,6 +69,7 @@ export default function Hello() {
   return (
     <div>
       <MantineProvider theme={{colorScheme}} withGlobalStyles withNormalizeCSS>
+        <Notifications/>
         <Router>
           <HeaderResponsive links={randomLinks} />
           <Routes>
